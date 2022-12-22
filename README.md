@@ -12,4 +12,4 @@ MyLibrary adalah aplikasi berbasis web untuk mempermudah transaksi peminjaman bu
 >> npx sequelize-cli model:generate --name Publisher --attributes "name:string,address:string"
 
 > Member
->> npx sequelize-cli model:generate --name Member --attributes "name:string,member_type:integer,address:string"
+>> npx sequelize-cli model:generate --name Member --attributes "name:string,address:string,booksId:integer"
