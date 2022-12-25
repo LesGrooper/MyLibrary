@@ -6,25 +6,80 @@ class MemberController {
     try {
       const member = await Member.findAll({
         order: [[`id`, `ASC`]],
+        include: [{ model: Books, as: "book" }],
       });
-      resp.json(member)
+      resp.json(member);
+    } catch (error) {
+      resp.json(error);
+      // console.log(error)
+      // resp.render('', {message: error.message})
+    }
+  }
+  static async create(req, resp) {
+    try {
+      const { name, address, booksId } = req.body;
+
+      let member = await Member.create({
+        name,
+        address,
+        booksId,
+      });
+
+      resp.json(member);
     } catch (error) {
       resp.json(error);
       // resp.render('', {message: error.message})
     }
   }
-  static async create(req,resp) {
+
+  static async update(req, resp) {
     try {
-        const {name, address, booksId} = req.body;
+      const id = +req.params.id;
 
-    let member = await Member.create({
-        name, address, booksId
-    })
+      const { name, address, booksId } = req.body;
 
-    resp.json(member)
+      let member = await Member.update(
+        {
+          name,
+          address,
+          booksId,
+        },
+        {
+          where: { id },
+        }
+      );
+
+      member[0] === 1 ? resp.json(`masuk`) : resp.json(`belum masuk`);
     } catch (error) {
-        resp.json(error)
-        // resp.render('', {message: error.message})
+      resp.json(error);
+    }
+  }
+
+  static async delete(req, resp) {
+    try {
+      const id = req.params.id;
+
+      let member = await Member.destroy({
+        where: { id },
+      });
+
+      member === 1 ? resp.json(`masuk`) : resp.json(`belum masuk`);
+    } catch (error) {
+      resp.json(error);
+    }
+  }
+
+  static async detail(req, resp) {
+    try {
+      let member = await Member.findAll({
+        where: {
+          booksId: req.params.id,
+        },
+        include: [{ model: Books, as: "book" }],
+      });
+      resp.json(member)
+    } catch (error) {
+      resp.json(error);
     }
   }
 
@@ -32,11 +87,12 @@ class MemberController {
     try {
       const name = req.query.name;
       const searchResult = await Member.findAll({
-        where: {name: name},
+        where: { name: name },
       });
       resp.json(searchResult);
     } catch (error) {
       resp.json(error);
+      // console.log(error)
     }
   }
 }

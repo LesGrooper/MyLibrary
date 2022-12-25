@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
       Publisher.belongsToMany(models.Books, {
         through: models.PublishedBy,
         foreignKey: "publisherId",
-        as: "publisher",
       });
     }
   }

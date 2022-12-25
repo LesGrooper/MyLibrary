@@ -1,10 +1,18 @@
-const bookRoute = require('express').Router();
-const { BookController } = require('../controllers');
+const bookRoute = require("express").Router();
+const { BookController } = require("../controllers");
 
-bookRoute.get('/', BookController.index)
+bookRoute.get("/", BookController.index);
 
-bookRoute.post('/create', BookController.create)
+bookRoute.get("/:id/detail", BookController.detail);
 
-bookRoute.get('/search', BookController.search)
+bookRoute.post("/create", BookController.create);
 
-module.exports = bookRoute
+bookRoute.post("/update/:id", BookController.update);
+
+bookRoute.get("/delete/:id", BookController.delete);
+
+bookRoute.get("/search", BookController.search);
+
+
+
+module.exports = bookRoute;

@@ -1,10 +1,17 @@
-const publisherRoute = require('express').Router();
-const { PublisherController } = require('../controllers');
+const publisherRoute = require("express").Router();
+const { PublisherController } = require("../controllers");
 
-publisherRoute.get('/', PublisherController.index)
+publisherRoute.get("/", PublisherController.index);
 
-publisherRoute.post('/create', PublisherController.create)
+publisherRoute.get("/:id/detail", PublisherController.detail);
 
-publisherRoute.get('/search', PublisherController.search)
+publisherRoute.post("/create", PublisherController.create);
 
-module.exports = publisherRoute
+publisherRoute.post("/update/:id", PublisherController.update);
+
+publisherRoute.get("/delete/:id", PublisherController.delete);
+
+publisherRoute.get("/search", PublisherController.search);
+
+
+module.exports = publisherRoute;
