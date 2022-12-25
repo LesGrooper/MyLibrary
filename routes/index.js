@@ -1,10 +1,10 @@
 const route = require("express").Router();
+const index = require('../controllers/index');
 
 route.get("/", (req, resp) => {
-  resp.json({
-    message: "Masuk",
-  });
-});
+  resp.render(`index.ejs`)
+}, index.showBooks);
+// route.get('/')
 
 const bookRoutes = require('./book');
 const memberRoutes = require('./member');
