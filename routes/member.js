@@ -5,4 +5,6 @@ memberRoute.get('/', MemberController.index)
 
 memberRoute.post('/create', MemberController.create)
 
+memberRoute.get('/search', MemberController.search)
+
 module.exports = memberRoute

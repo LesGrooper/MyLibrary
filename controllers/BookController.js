@@ -30,6 +30,18 @@ class BookController {
       // resp.render('', {message: error.message})
     }
   }
+
+  static async search(req, resp) {
+    try {
+      const author = req.query.author;
+      const searchResult = await Books.findAll({
+        where: {author: author},
+      });
+      resp.json(searchResult);
+    } catch (error) {
+      resp.json(error);
+    }
+  }
 }
 
 module.exports = BookController;

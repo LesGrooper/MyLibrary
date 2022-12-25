@@ -27,6 +27,18 @@ class MemberController {
         // resp.render('', {message: error.message})
     }
   }
+
+  static async search(req, resp) {
+    try {
+      const name = req.query.name;
+      const searchResult = await Member.findAll({
+        where: {name: name},
+      });
+      resp.json(searchResult);
+    } catch (error) {
+      resp.json(error);
+    }
+  }
 }
 
 module.exports = MemberController;
