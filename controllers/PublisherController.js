@@ -9,8 +9,7 @@ class PublisherController {
       });
       resp.render("publishers/index.ejs", { publisher });
     } catch (error) {
-      resp.json(error);
-      // resp.render('', {message: error.message})
+      resp.render('errorPage/error.ejs', {message: error.message})
     }
   }
 

@@ -10,7 +10,7 @@ route.get("/", async (req, resp) => {
 
     resp.render(`index.ejs`, { book, publisher, member });
   } catch (error) {
-    resp.json(er);
+    resp.render('errorPage/error.ejs', {message:error.message})
   }
 });
 // route.get('/')
