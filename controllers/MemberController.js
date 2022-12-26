@@ -22,10 +22,10 @@ class MemberController {
       let member = await Member.create({
         name,
         address,
-        booksId,
+        // booksId,
       });
 
-      resp.render('/members', {member})
+      resp.redirect("/members")
     } catch (error) {
       resp.json(error);
       // resp.render('', {message: error.message})
@@ -33,7 +33,11 @@ class MemberController {
   }
 
   static async add(req, resp) {
-    resp.redirect('/members/add.ejs')
+    try {
+      resp.render('members/add.ejs')
+    } catch (error) {
+      resp.json(error);
+    }
   }
 
   static async update(req, resp) {
@@ -53,7 +57,7 @@ class MemberController {
         }
       );
 
-      member[0] === 1 ? resp.json(`masuk`) : resp.json(`belum masuk`);
+      member[0] === 1 ? resp.redirect('/members') : resp.json(`belum masuk`);
     } catch (error) {
       resp.json(error);
     }
@@ -79,7 +83,7 @@ class MemberController {
         where: { id },
       });
 
-      member === 1 ? resp.json(`masuk`) : resp.json(`belum masuk`);
+      member === 1 ? resp.redirect('/members') : resp.json(`belum masuk`);
     } catch (error) {
       resp.json(error);
     }

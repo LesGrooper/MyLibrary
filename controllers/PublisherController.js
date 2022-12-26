@@ -21,8 +21,8 @@ class PublisherController {
         name,
         address,
       });
-
-      resp.render("/publishers", { publisher });
+      // resp.send(publisher);
+      resp.redirect("/publishers");
     } catch (error) {
       resp.json(error);
       // resp.render('', {message: error.message})
@@ -30,7 +30,11 @@ class PublisherController {
   }
 
   static async add(req, resp) {
-    resp.render("publishers/add.ejs");
+    try {
+      resp.render('publishers/add.ejs');
+    } catch (error) {
+      resp.json(error);
+    }
   }
 
   static async update(req, resp) {
@@ -63,7 +67,7 @@ class PublisherController {
       let publisher = await Publisher.findByPk(id);
       let book = await Books.findAll();
 
-      resp.render("publisher/update.ejs/", {
+      resp.render("publishers/update.ejs/", {
         book,
         publisher,
       });
@@ -79,7 +83,7 @@ class PublisherController {
       where: { id },
     });
 
-    publisher === 1 ? resp.json(`masuk`) : resp.json(`belum masuk`);
+    publisher === 1 ? resp.redirect('/publishers') : resp.json(`belum masuk`);
   }
 
   static async detail(req, resp) {

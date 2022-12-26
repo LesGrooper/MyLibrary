@@ -149,8 +149,8 @@
                         <td>
                             <div class="justify-content-center">
                                 <a href="/members/<%= e.id %>/detail" class="btn btn-info rounded-pill m-1">Detail</a>
-                                <a href="" class="btn btn-success rounded-pill m-1">Update</a>
-                                <a href="" class="btn btn-danger rounded-pill m-1">Delete</a>
+                                <a href="members/update/<%= e.id %>" class="btn btn-success rounded-pill m-1">Edit</a>
+                                <a href="/members/delete/<%= e.id %>" class="btn btn-danger rounded-pill m-1">Delete</a>
                             </div>
                         </td>
                         <% }) %>

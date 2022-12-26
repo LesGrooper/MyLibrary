@@ -72,13 +72,13 @@
             <a href="/" class="nav-item nav-link"
               ><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a
             >
-            <a href="./books/" class="nav-item nav-link"
+            <a href="/books" class="nav-item nav-link"
               ><i class="bi bi-book"></i> Books</a
             >
-            <a href="./members/" class="nav-item nav-link"
+            <a href="/members" class="nav-item nav-link"
               ><i class="bi bi-people"></i> Members</a
             >
-            <a href="./publishers/" class="nav-item nav-link active"
+            <a href="/publishers" class="nav-item nav-link active"
               ><i class="bi bi-building"></i> Publishers</a
             >
           </div>
@@ -147,8 +147,8 @@
                         <td>
                             <div class="justify-content-center">
                                 <a href="/publisher/<%= e.id %>/detail" class="btn btn-info rounded-pill m-1">Detail</a>
-                                <a href="" class="btn btn-success rounded-pill m-1">Update</a>
-                                <a href="" class="btn btn-danger rounded-pill m-1">Delete</a>
+                                <a href="/publishers/update/<%= e.id %>" class="btn btn-success rounded-pill m-1">Edit</a>
+                                <a href="/publishers/delete/<%= e.id %>" class="btn btn-danger rounded-pill m-1">Delete</a>
                             </div>
                         </td>
                         <% }) %>
@@ -156,7 +156,7 @@
                     <% } %>
                 </tbody>
               </table>
-              <a href="/publisher/add" class="btn btn-primary">Add</a>
+              <a href="/publishers/add" class="btn btn-primary">Add</a>
             </div>
         </div>
         </div>

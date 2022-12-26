@@ -3,10 +3,10 @@ const { BookController } = require("../controllers");
 
 bookRoute.get("/", BookController.index);
 
-bookRoute.get("/:id/detail", BookController.detail);
+bookRoute.get("/detail/:id", BookController.detail);
 
 bookRoute.post("/create", BookController.create);
-bookRoute.get("/create", BookController.add);
+bookRoute.get("/add", BookController.add);
 
 bookRoute.post("/update/:id", BookController.update);
 bookRoute.get("/update/:id", BookController.edit);

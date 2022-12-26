@@ -16,6 +16,7 @@ class BookController {
   }
 
   static async create(req, resp) {
+    // console.log(req.body)
     try {
       const { author, title, price, availability } = req.body;
 
@@ -25,7 +26,7 @@ class BookController {
         price,
         availability,
       });
-      resp.redirect("/books", {book})
+      resp.redirect("/books")
     } catch (error) {
       resp.json(error);
       // resp.render('', {message: error.message})
@@ -86,7 +87,7 @@ class BookController {
         where: { id },
       });
 
-      book === 1 ? resp.json("masuk") : resp.json(`belum masuk`);
+      book === 1 ? resp.redirect('/books') : resp.json(`belum masuk`);
     } catch (error) {
       resp.json(error);
     }
@@ -106,7 +107,7 @@ class BookController {
         ],
       });
 
-      resp.render(`/books/${id}/detail.ejs`, { book: book[0] });
+      resp.render(`/books/detail.ejs`, { book: book[0] });
     } catch (error) {
       // console.log(error)
       resp.json(error);

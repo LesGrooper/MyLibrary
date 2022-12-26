@@ -6,7 +6,7 @@ memberRoute.get("/", MemberController.index);
 memberRoute.get("/:id/detail", MemberController.detail);
 
 memberRoute.post("/create", MemberController.create);
-memberRoute.get("/create", MemberController.add);
+memberRoute.get("/add", MemberController.add);
 
 memberRoute.post("/update/:id", MemberController.update);
 memberRoute.get("/update/:id", MemberController.edit);
