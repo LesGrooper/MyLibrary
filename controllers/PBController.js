@@ -1,7 +1,7 @@
 `use strict`;
 const { Books, Publisher, PublishedBy } = require("../models");
 
-class PublisherController {
+class PBController {
   static async index(req, resp) {
     try {
       const publishedBy = await PublishedBy.findAll({
@@ -16,10 +16,9 @@ class PublisherController {
           },
         ],
       });
-      resp.json(publishedBy);
+      resp.render(`publishedBy/index.ejs`, {publishedBy});
     } catch (error) {
-      resp.json(error);
-      // resp.render('', {message: error.message})
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 
@@ -34,8 +33,14 @@ class PublisherController {
       });
       resp.json(publishedBy);
     } catch (error) {
-      resp.json(error);
-      console.log(error);
+      resp.render("errorPage/error.ejs", { message: error.message });
+    }
+  }
+  static async add(req, resp) {
+    try {
+      resp.render("publishedBy/add.ejs");
+    } catch (error) {
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 
@@ -54,9 +59,26 @@ class PublisherController {
         { where: { id } }
       );
 
-      publishedBy[0] === 1 ? resp.json(`masuk`) : resp.json(`belum masuk`);
+      publishedBy[0] === 1 ? resp.redirect('/publishedBy') : resp.render(`errorPage/404.ejs`);
     } catch (error) {
-      resp.json(error);
+      resp.render("errorPage/error.ejs", { message: error.message });
+    }
+  }
+  static async edit(req, resp) {
+    try {
+      const id = +req.params.id;
+
+      let publishedBy = await PublishedBy.findByPk(id);
+      let publisher = await Publisher.findAll();
+      let book = await Books.findAll();
+
+      resp.render("publishedBy/update.ejs/", {
+        publishedBy,
+        book,
+        publisher,
+      });
+    } catch (error) {
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 
@@ -68,11 +90,23 @@ class PublisherController {
         where: { id },
       });
 
-      publishedBy === 1 ? resp.json(`masuk`) : resp.json(`belum masuk`);
+      publishedBy === 1 ? resp.redirect('/publishedBy') : resp.render(`errorPage/404.ejs`);
     } catch (error) {
-      resp.json(error);
+      resp.render("errorPage/error.ejs", { message: error.message });
+    }
+  }
+
+  static async search(req, resp) {
+    try {
+      const name = req.query.name;
+      const searchResult = await PublishedBy.findAll({
+        where: { name: releaseDate },
+      });
+      resp.json(searchResult);
+    } catch (error) {
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 }
 
-module.exports = PublisherController;
+module.exports = PBController;

@@ -8,8 +8,9 @@ class PublisherController {
         order: [[`id`, `ASC`]],
       });
       resp.render("publishers/index.ejs", { publisher });
+      // resp.json(publisher)
     } catch (error) {
-      resp.render('errorPage/error.ejs', {message: error.message})
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 
@@ -24,16 +25,16 @@ class PublisherController {
       // resp.send(publisher);
       resp.redirect("/publishers");
     } catch (error) {
-      resp.json(error);
+      resp.render("errorPage/error.ejs", { message: error.message });
       // resp.render('', {message: error.message})
     }
   }
 
   static async add(req, resp) {
     try {
-      resp.render('publishers/add.ejs');
+      resp.render("publishers/add.ejs");
     } catch (error) {
-      resp.json(error);
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 
@@ -55,9 +56,9 @@ class PublisherController {
 
       publisher[0] === 1
         ? resp.redirect("/publishers")
-        : resp.json(`belum masuk`);
+        : resp.render("errorPage/404.ejs", { message: `404 NOT FOUND!` });
     } catch (error) {
-      resp.json(error);
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 
@@ -72,7 +73,7 @@ class PublisherController {
         publisher,
       });
     } catch (error) {
-      resp.json(error);
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 
@@ -83,23 +84,26 @@ class PublisherController {
       where: { id },
     });
 
-    publisher === 1 ? resp.redirect('/publishers') : resp.json(`belum masuk`);
+    publisher === 1
+      ? resp.redirect("/publishers")
+      : resp.render("errorPage/404.ejs", { message: `404 NOT FOUND!` });
   }
 
   static async detail(req, resp) {
     try {
+      const id = +req.params.id;
       let publisher = await PublishedBy.findAll({
         where: {
-          publisherId: req.params.id,
+          publisherId: id,
         },
         include: [
-          { model: Books, as: "book" },
           { model: Publisher, as: "publisher" },
+          { model: Books, as: "book" },
         ],
       });
-      resp.json(publisher);
+      resp.render(`publishers/detail.ejs`, { publisher: publisher });
     } catch (error) {
-      resp.json(error);
+      resp.render("errorPage/error.ejs", { message: error.message });
       console.log(error);
     }
   }
@@ -112,7 +116,7 @@ class PublisherController {
       });
       resp.json(searchResult);
     } catch (error) {
-      resp.json(error);
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 }

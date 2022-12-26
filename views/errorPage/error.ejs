@@ -72,13 +72,13 @@
             <a href="/" class="nav-item nav-link"
               ><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a
             >
-            <a href="./books/" class="nav-item nav-link"
+            <a href="/books" class="nav-item nav-link"
               ><i class="bi bi-book"></i> Books</a
             >
-            <a href="./members/" class="nav-item nav-link"
+            <a href="/members" class="nav-item nav-link"
               ><i class="bi bi-people"></i> Members</a
             >
-            <a href="./publishers/" class="nav-item nav-link active"
+            <a href="/publishers" class="nav-item nav-link active"
               ><i class="bi bi-building"></i> Publishers</a
             >
           </div>
@@ -124,7 +124,10 @@
             class="row vh-100 bg-secondary rounded align-items-center justify-content-center mx-0"
           >
             <div class="col-md-6 text-center">
-              <h3>This is blank page</h3>
+              <h3><%= message %></h3>
+              <a class="btn btn-primary rounded-pill py-1 px-2" href="/"
+              >Back</a
+            >
             </div>
           </div>
         </div>

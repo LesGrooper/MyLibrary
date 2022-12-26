@@ -72,13 +72,13 @@
             <a href="/" class="nav-item nav-link"
               ><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a
             >
-            <a href="./books/" class="nav-item nav-link active"
+            <a href="/books" class="nav-item nav-link active"
               ><i class="bi bi-book"></i> Books</a
             >
-            <a href="./members/" class="nav-item nav-link"
+            <a href="/members" class="nav-item nav-link"
               ><i class="bi bi-people"></i> Members</a
             >
-            <a href="./publishers/" class="nav-item nav-link"
+            <a href="/publishers" class="nav-item nav-link"
               ><i class="bi bi-building"></i> Publishers</a
             >
           </div>
@@ -118,7 +118,6 @@
         </nav>
         <!-- Navbar End -->
 
-
         <!-- Table Big Start -->
         <div class="container-fluid pt-4 px-4">
           <div class="bg-secondary text-center rounded p-4">
@@ -126,9 +125,40 @@
               <h6 class="mb-0">Books Table</h6>
             </div>
             <div class="table-responsive">
-
+              <table
+                class="table text-start align-middle table-bordered table-hover mb-0"
+              >
+                <thead>
+                  <tr class="text-white">
+                    <th scope="col">Kode Buku</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Availability</th>
+                    <th scope="col">Publisher</th>
+                    <th scope="col">Published By</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% books.forEach((e,i) =>{ %>
+                  <tr>
+                    <th scope="row"><%= ++i %></th>
+                    <td><%= e.book.author %></td>
+                    <td><%= e.book.title %></td>
+                    <td><%= e.book.price %></td>
+                    <td><%= e.book.availability %></td>
+                    <td><%= e.publisher.name %></td>
+                    <td><%= e.releaseDate%></td>
+                    </td>
+                    <% }) %>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
+          <a class="btn btn-primary rounded-pill py-1 px-2" href="/books"
+                  >Back</a
+                >
         </div>
         <!-- Table Big End -->
 

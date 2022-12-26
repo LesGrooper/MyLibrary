@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Index Members</title>
+    <title>Add Published By</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta content="" name="keywords" />
     <meta content="" name="description" />
@@ -123,44 +123,48 @@
         <div class="container-fluid pt-4 px-4">
           <div class="bg-secondary text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
-              <h6 class="mb-0">Books Table</h6>
+              <h6 class="mb-0">Add PublishedBy</h6>
             </div>
-            <div class="table-responsive">
-              <table
-                class="table text-start align-middle table-bordered table-hover mb-0"
-              >
-                <thead>
-                  <tr class="text-white">
-                    <th scope="col">Kode Member</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Books ID</th>
-                    <th scope="col">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% if(!member.length){ %> <% } else { %>
-                    <% member.forEach((e,i) =>{ %>
-                      <tr>
-                        <th scope="row"><%= ++i %></th>
-                        <td><%= e.name %></td>
-                        <td><%= e.address %></td>
-                        <td><%= e.booksId %></td>
-                        <td>
-                            <div class="justify-content-center">
-                                <a href="/members/<%= e.id %>/detail" class="btn btn-info rounded-pill m-1">Detail</a>
-                                <a href="members/update/<%= e.id %>" class="btn btn-success rounded-pill m-1">Edit</a>
-                                <a href="/members/delete/<%= e.id %>" class="btn btn-danger rounded-pill m-1">Delete</a>
-                            </div>
-                        </td>
-                        <% }) %>
-                      </tr>
-                    <% } %>
-                </tbody>
-              </table>
-              <a href="/members/add" class="btn btn-primary">Add</a>
-            </div>
-        </div>
+            <form action="/publishedBy/create" method="post">
+              <div class="row mb-3">
+                <label for="" class="col-sm-2 col-form-label"
+                  >Books Id</label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    name="booksId"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="" class="col-sm-2 col-form-label"
+                  >publisherId</label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    name="publisherId"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="" class="col-sm-2 col-form-label"
+                  >Release Date</label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    name="releaseDate"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+          </div>
         </div>
         <!-- Table Big End -->
 

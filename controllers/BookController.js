@@ -9,14 +9,11 @@ class BookController {
       });
       resp.render("books/index.ejs", { book });
     } catch (error) {
-      resp.json(error);
-      console.log(error);
-      // resp.render('', {message: error.message})
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 
   static async create(req, resp) {
-    // console.log(req.body)
     try {
       const { author, title, price, availability } = req.body;
 
@@ -26,18 +23,17 @@ class BookController {
         price,
         availability,
       });
-      resp.redirect("/books")
+      resp.redirect("/books");
     } catch (error) {
-      resp.json(error);
-      // resp.render('', {message: error.message})
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 
-  static async add(req,resp){
+  static async add(req, resp) {
     try {
-      resp.render('books/add.ejs')
+      resp.render("books/add.ejs");
     } catch (error) {
-      resp.json(error)
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 
@@ -58,9 +54,9 @@ class BookController {
         }
       );
 
-      book[0] === 1 ? resp.redirect('/books') : resp.json(`belum masuk`);
+      book[0] === 1 ? resp.redirect("/books") : resp.render('errorPage/404.ejs', {message: `404 NOT FOUND!`})
     } catch (error) {
-      resp.json(error);
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
   static async edit(req, resp) {
@@ -75,7 +71,7 @@ class BookController {
         publisher,
       });
     } catch (error) {
-      resp.json(error);
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 
@@ -87,9 +83,9 @@ class BookController {
         where: { id },
       });
 
-      book === 1 ? resp.redirect('/books') : resp.json(`belum masuk`);
+      book === 1 ? resp.redirect("/books") : resp.render('errorPage/404.ejs', {message: `404 NOT FOUND!`})
     } catch (error) {
-      resp.json(error);
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 
@@ -97,20 +93,20 @@ class BookController {
     try {
       const id = +req.params.id;
 
-      let book = await PublishedBy.findAll({
+      let books = await PublishedBy.findAll({
         where: {
           booksId: id,
         },
         include: [
-          { model: Books, as: "book" },
           { model: Publisher, as: "publisher" },
+          { model: Books, as: "book" },
         ],
+        order: [[`id`, `ASC`]],
       });
 
-      resp.render(`/books/detail.ejs`, { book: book[0] });
+      resp.render(`books/detail.ejs`, { books: books });
     } catch (error) {
-      // console.log(error)
-      resp.json(error);
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 
@@ -122,8 +118,7 @@ class BookController {
       });
       resp.json(searchResult);
     } catch (error) {
-      resp.json(error);
-      console.log(error);
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 }

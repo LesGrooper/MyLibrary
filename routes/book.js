@@ -3,7 +3,7 @@ const { BookController } = require("../controllers");
 
 bookRoute.get("/", BookController.index);
 
-bookRoute.get("/detail/:id", BookController.detail);
+bookRoute.get("/:id/detail", BookController.detail);
 
 bookRoute.post("/create", BookController.create);
 bookRoute.get("/add", BookController.add);

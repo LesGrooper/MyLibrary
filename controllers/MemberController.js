@@ -8,11 +8,9 @@ class MemberController {
         order: [[`id`, `ASC`]],
         include: [{ model: Books, as: "book" }],
       });
-      resp.render('members/index.ejs', {member})
+      resp.render("members/index.ejs", { member });
     } catch (error) {
-      resp.json(error);
-      // console.log(error)
-      // resp.render('', {message: error.message})
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
   static async create(req, resp) {
@@ -22,21 +20,20 @@ class MemberController {
       let member = await Member.create({
         name,
         address,
-        // booksId,
+        booksId,
       });
 
-      resp.redirect("/members")
+      resp.redirect("/members");
     } catch (error) {
-      resp.json(error);
-      // resp.render('', {message: error.message})
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 
   static async add(req, resp) {
     try {
-      resp.render('members/add.ejs')
+      resp.render("members/add.ejs");
     } catch (error) {
-      resp.json(error);
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 
@@ -57,21 +54,23 @@ class MemberController {
         }
       );
 
-      member[0] === 1 ? resp.redirect('/members') : resp.json(`belum masuk`);
+      member[0] === 1
+        ? resp.redirect("/members")
+        : resp.render("errorPage/404.ejs", { message: `404 NOT FOUND!` });
     } catch (error) {
-      resp.json(error);
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
-  
-  static async edit (req,resp) {
+
+  static async edit(req, resp) {
     try {
-      const id = +req.params.id
+      const id = +req.params.id;
 
-      let member = await Member.findByPk(id)
+      let member = await Member.findByPk(id);
 
-    resp.render("members/update.ejs", {member})
+      resp.render("members/update.ejs", { member });
     } catch (error) {
-      resp.json(error)
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 
@@ -83,23 +82,27 @@ class MemberController {
         where: { id },
       });
 
-      member === 1 ? resp.redirect('/members') : resp.json(`belum masuk`);
+      member === 1
+        ? resp.redirect("/members")
+        : resp.render("errorPage/404.ejs", { message: `404 NOT FOUND!` });
     } catch (error) {
-      resp.json(error);
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 
   static async detail(req, resp) {
     try {
+      const id = +req.params.id;
+
       let member = await Member.findAll({
         where: {
-          booksId: req.params.id,
+          booksId: id,
         },
         include: [{ model: Books, as: "book" }],
       });
-      resp.json(member)
+      resp.render(`members/detail.ejs`, { member: member });
     } catch (error) {
-      resp.json(error);
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 
@@ -111,8 +114,7 @@ class MemberController {
       });
       resp.json(searchResult);
     } catch (error) {
-      resp.json(error);
-      // console.log(error)
+      resp.render("errorPage/error.ejs", { message: error.message });
     }
   }
 }
