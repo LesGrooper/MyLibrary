@@ -7,7 +7,7 @@ class BookController {
       const book = await Books.findAll({
         order: [[`id`, `ASC`]],
       });
-      resp.json(book);
+      resp.render("books/index.ejs", { book });
     } catch (error) {
       resp.json(error);
       console.log(error);
@@ -25,10 +25,18 @@ class BookController {
         price,
         availability,
       });
-      resp.json(book);
+      resp.redirect("/books", {book})
     } catch (error) {
       resp.json(error);
       // resp.render('', {message: error.message})
+    }
+  }
+
+  static async add(req,resp){
+    try {
+      resp.render('books/add.ejs')
+    } catch (error) {
+      resp.json(error)
     }
   }
 
@@ -49,7 +57,22 @@ class BookController {
         }
       );
 
-      book[0] === 1 ? resp.json("masuk") : resp.json(`belum masuk`);
+      book[0] === 1 ? resp.redirect('/books') : resp.json(`belum masuk`);
+    } catch (error) {
+      resp.json(error);
+    }
+  }
+  static async edit(req, resp) {
+    try {
+      const id = +req.params.id;
+
+      let book = await Books.findByPk(id);
+      let publisher = await Publisher.findAll();
+
+      resp.render("books/update.ejs/", {
+        book,
+        publisher,
+      });
     } catch (error) {
       resp.json(error);
     }
@@ -71,11 +94,11 @@ class BookController {
 
   static async detail(req, resp) {
     try {
-
+      const id = +req.params.id;
 
       let book = await PublishedBy.findAll({
         where: {
-          booksId: req.params.id,
+          booksId: id,
         },
         include: [
           { model: Books, as: "book" },
@@ -83,7 +106,7 @@ class BookController {
         ],
       });
 
-      resp.json(book);
+      resp.render(`/books/${id}/detail.ejs`, { book: book[0] });
     } catch (error) {
       // console.log(error)
       resp.json(error);

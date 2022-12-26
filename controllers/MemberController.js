@@ -8,7 +8,7 @@ class MemberController {
         order: [[`id`, `ASC`]],
         include: [{ model: Books, as: "book" }],
       });
-      resp.json(member);
+      resp.render('members/index.ejs', {member})
     } catch (error) {
       resp.json(error);
       // console.log(error)
@@ -25,11 +25,15 @@ class MemberController {
         booksId,
       });
 
-      resp.json(member);
+      resp.render('/members', {member})
     } catch (error) {
       resp.json(error);
       // resp.render('', {message: error.message})
     }
+  }
+
+  static async add(req, resp) {
+    resp.redirect('/members/add.ejs')
   }
 
   static async update(req, resp) {
@@ -52,6 +56,18 @@ class MemberController {
       member[0] === 1 ? resp.json(`masuk`) : resp.json(`belum masuk`);
     } catch (error) {
       resp.json(error);
+    }
+  }
+  
+  static async edit (req,resp) {
+    try {
+      const id = +req.params.id
+
+      let member = await Member.findByPk(id)
+
+    resp.render("members/update.ejs", {member})
+    } catch (error) {
+      resp.json(error)
     }
   }
 
